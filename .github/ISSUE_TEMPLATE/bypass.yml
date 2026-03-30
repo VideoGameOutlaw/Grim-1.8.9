@@ -1,5 +1,5 @@
 name: Bypass
-description: Report a bypass here
+description: Report a bypass against this legacy-focused fork
 labels: ["bypass"]
 body:
   - type: textarea
@@ -15,9 +15,9 @@ body:
 
   - type: textarea
     attributes:
-      label: Grim version
+      label: GrimLegacy fork version
       description: |
-        Provide the version of Grim running on the server. You can run `/grim version` to check.
+        Provide the version of this GrimLegacy fork running on the server. You can run `/grim version` to check.
       placeholder: Examples include 2.3.73-8ddd7f1, 2.3.72, etc.
     validations:
       required: true
@@ -26,7 +26,7 @@ body:
     attributes:
       label: Server version
       description: |
-        Run `/version` on your server to check. Provide both the server type (ie Paper, Airplane, etc) & the Minecraft version.
+        Run `/version` and provide server software/build + Minecraft version (include if this is a 1.8.8/1.8.9 stack).
     validations:
       required: true
 
@@ -34,7 +34,7 @@ body:
     attributes:
       label: Client version
       description: |
-        Provide the version of your Minecraft client. Also provide the protocol version if changed.
+        Provide the version of your Minecraft client (preferably 1.8.9 details) and protocol overrides if any.
     validations:
       required: true
 
