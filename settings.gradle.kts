@@ -63,9 +63,13 @@ if (gradle.startParameter.isBuildScan) {
 rootProject.name = "grimac"
 include("common")
 include("bukkit")
-include("fabric")
-include(":fabric:mc1161")
-include(":fabric:mc1171")
-include(":fabric:mc1194")
-include(":fabric:mc1205")
-include(":fabric:mc12111")
+
+val legacyJava8 = providers.gradleProperty("legacyJava8").orNull?.toBoolean() == true
+if (!legacyJava8) {
+    include("fabric")
+    include(":fabric:mc1161")
+    include(":fabric:mc1171")
+    include(":fabric:mc1194")
+    include(":fabric:mc1205")
+    include(":fabric:mc12111")
+}

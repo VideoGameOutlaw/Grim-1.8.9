@@ -81,7 +81,7 @@ public class ConfigManagerFileImpl implements ConfigManager, BasicReloadable {
 
                     configVersion = Integer.parseInt(configStringVersion);
                     // TODO: Do we have to hardcode this?
-                    configString = configString.replaceAll("config-version: " + configStringVersion, "config-version: 9");
+                    configString = configString.replaceAll("config-version: " + configStringVersion, "config-version: 10");
                     Files.write(config.toPath(), configString.getBytes());
 
                     upgradeModernConfig(config, configString, configVersion);
@@ -122,6 +122,9 @@ public class ConfigManagerFileImpl implements ConfigManager, BasicReloadable {
         }
         if (configVersion < 9) {
             newOffsetHandlingAntiKB(config, configString);
+        }
+        if (configVersion < 10) {
+            addLegacyHardeningConfig(config);
         }
     }
 
@@ -287,6 +290,40 @@ public class ConfigManagerFileImpl implements ConfigManager, BasicReloadable {
         Files.write(config.toPath(), configString.getBytes());
     }
 
+
+    private void addLegacyHardeningConfig(File config) throws IOException {
+        String configString = new String(Files.readAllBytes(config.toPath()));
+        if (configString.contains("legacy-hardening:")) {
+            return;
+        }
+
+        configString += "\n# Legacy 1.8.9 hardening profile for hostile public servers.\n" +
+                "legacy-hardening:\n" +
+                "    enabled: true\n" +
+                "    packet-rate:\n" +
+                "        movement-per-second: 250\n" +
+                "        custom-payload-per-second: 30\n" +
+                "        window-click-per-second: 80\n" +
+                "        interact-entity-per-second: 120\n" +
+                "        block-place-per-second: 90\n" +
+                "        chat-per-second: 4\n" +
+                "    limits:\n" +
+                "        custom-payload-bytes: 2048\n" +
+                "        chat-length: 100\n" +
+                "        max-window-slot: 127\n" +
+                "    sanity:\n" +
+                "        max-absolute-coordinate: 3.0E7\n" +
+                "    actions:\n" +
+                "        cancel-packet: true\n" +
+                "        alert-staff: true\n" +
+                "        log-warning: true\n" +
+                "        kick-on-severe: false\n" +
+                "        malformed-threshold: 6\n" +
+                "        ignore-seconds-after-threshold: 6\n" +
+                "        log-rate-limit-ms: 3000\n";
+
+        Files.write(config.toPath(), configString.getBytes());
+    }
     @Override
     public String getStringElse(String key, String otherwise) {
         return config.getStringElse(key, otherwise);

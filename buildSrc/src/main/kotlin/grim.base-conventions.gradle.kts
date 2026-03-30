@@ -11,8 +11,10 @@ version = rootProject.version
 description = rootProject.description
 
 // Java compilation settings
+val legacyJava8 = providers.gradleProperty("legacyJava8").map { it.toBoolean() }.orElse(false).get()
+
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+    toolchain.languageVersion.set(JavaLanguageVersion.of(if (legacyJava8) 8 else 21))
     disableAutoTargetJvm()
     withSourcesJar()
     withJavadocJar()
@@ -38,7 +40,12 @@ spotless {
 tasks {
     withType<JavaCompile>().configureEach {
         options.encoding = "UTF-8"
-        options.release.set(17)
+        if (legacyJava8) {
+            sourceCompatibility = "1.8"
+            targetCompatibility = "1.8"
+        } else {
+            options.release.set(17)
+        }
     }
 
     build {

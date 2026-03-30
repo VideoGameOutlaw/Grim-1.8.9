@@ -234,4 +234,30 @@ history:
         username: root
         password: ""
 
-config-version: 9
+# Legacy 1.8.9 hardening profile for hostile public servers.
+# These are fast pre-check guardrails intended to reduce parser pressure and packet abuse.
+legacy-hardening:
+    enabled: true
+    packet-rate:
+        movement-per-second: 250
+        custom-payload-per-second: 30
+        window-click-per-second: 80
+        interact-entity-per-second: 120
+        block-place-per-second: 90
+        chat-per-second: 4
+    limits:
+        custom-payload-bytes: 2048
+        chat-length: 100
+        max-window-slot: 127
+    sanity:
+        max-absolute-coordinate: 3.0E7
+    actions:
+        cancel-packet: true
+        alert-staff: true
+        log-warning: true
+        kick-on-severe: false
+        malformed-threshold: 6
+        ignore-seconds-after-threshold: 6
+        log-rate-limit-ms: 3000
+
+config-version: 10

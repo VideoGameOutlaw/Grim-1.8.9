@@ -1,5 +1,5 @@
 name: Server crash or error
-description: Report a server crash or error here
+description: Report a crash, packet exploit, or runtime error
 labels: ["error"]
 body:
   - type: textarea
@@ -24,9 +24,9 @@ body:
 
   - type: textarea
     attributes:
-      label: Grim version
+      label: GrimLegacy fork version
       description: |
-        Provide the version of Grim running on the server. You can run `/grim version` to check.
+        Provide the version of this GrimLegacy fork running on the server. You can run `/grim version` to check.
       placeholder: Examples include 2.3.73-8ddd7f1, 2.3.72, etc.
     validations:
       required: true
@@ -35,7 +35,7 @@ body:
     attributes:
       label: Server version
       description: |
-        Run `/version` on your server to check. Provide both the server type (ie Paper, Airplane, etc) & the Minecraft version.
+        Run `/version` and provide server software/build + Minecraft version (include if this is a 1.8.8/1.8.9 stack).
     validations:
       required: true
 
@@ -45,8 +45,8 @@ body:
       label: Affected Platform(s)
       description: Which platforms does this issue affect? If you aren't sure, select both.
       options:
-        - "Bukkit"
-        - "Fabric"
+        - "Bukkit (primary target)"
+        - "Fabric (not primary target)"
       multiple: true
     validations:
       required: true

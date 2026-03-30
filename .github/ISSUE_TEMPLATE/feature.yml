@@ -1,5 +1,5 @@
 name: Feature suggestion
-description: Suggest a feature
+description: Suggest a feature relevant to legacy 1.8.9/anarchy hardening use
 labels: ["enhancement"]
 body:
   - type: textarea
