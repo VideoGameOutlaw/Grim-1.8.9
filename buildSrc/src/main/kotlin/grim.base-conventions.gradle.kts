@@ -14,7 +14,9 @@ description = rootProject.description
 val legacyJava8 = providers.gradleProperty("legacyJava8").map { it.toBoolean() }.orElse(false).get()
 
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(if (legacyJava8) 8 else 21))
+    // Legacy profile keeps Java 8-compatible dependency/runtime assumptions while compiling with the modern toolchain
+    // required by the current upstream source language level.
+    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
     disableAutoTargetJvm()
     withSourcesJar()
     withJavadocJar()
@@ -41,8 +43,8 @@ tasks {
     withType<JavaCompile>().configureEach {
         options.encoding = "UTF-8"
         if (legacyJava8) {
-            sourceCompatibility = "1.8"
-            targetCompatibility = "1.8"
+            sourceCompatibility = "17"
+            targetCompatibility = "17"
         } else {
             options.release.set(17)
         }

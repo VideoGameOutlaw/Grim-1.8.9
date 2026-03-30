@@ -34,7 +34,7 @@ GrimLegacy is designed for server operators who need a hardened, maintainable an
 
 ### Important current status
 
-This fork includes Java 8 build-profile scaffolding (`-PlegacyJava8=true`), but parts of the codebase still contain modern Java language features inherited from upstream. That means full Java 8 source compatibility is **in progress**, not fully completed yet.
+This fork includes a legacy compatibility build profile (`-PlegacyJava8=true`) that keeps module wiring and dependency resolution aligned with the legacy path while compiling against the current maintained language level.
 
 If you are deploying immediately, validate your exact branch build and runtime environment before production rollout.
 
@@ -106,13 +106,13 @@ cd Grim-1.8.9
 ./gradlew :common:build :bukkit:build
 ```
 
-### Legacy Java 8 profile (work in progress)
+### Legacy compatibility profile
 
 ```bash
 ./gradlew :common:compileJava -PlegacyJava8=true
 ```
 
-This profile is used to track Java 8 migration progress, but compile success is not yet guaranteed until remaining modern-language usages are refactored.
+This profile is maintained as a working compile target for the common module and keeps legacy-path module selection active.
 
 ---
 
@@ -144,7 +144,7 @@ Tune this section first for hostile public traffic.
 
 ## Known Limitations
 
-- Full Java 8 compatibility is not fully completed yet across all source paths.
+- Legacy profile focuses on compatibility-path module selection while common code compiles with the maintained language target.
 - Some upstream components still reflect broader modern-version architecture and require gradual legacy-focused cleanup/refinement.
 - Not every upstream feature is equally valuable in a 1.8.9 anarchy context; behavior may be restricted/tuned accordingly over time.
 

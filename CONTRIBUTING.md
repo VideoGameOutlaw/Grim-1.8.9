@@ -17,7 +17,7 @@ This fork has different priorities from modern upstream Grim. Please align chang
 This repository is focused on:
 
 - Minecraft **1.8.9-oriented** behavior,
-- **Java 8 compatibility goal** (ongoing migration),
+- **Legacy compatibility profile** (`-PlegacyJava8=true`),
 - Vanilla-anarchy/public-survival operational realities.
 
 Avoid PRs that optimize only for tightly controlled minigame environments while increasing false positives for public survival/anarchy traffic.
@@ -28,7 +28,7 @@ Avoid PRs that optimize only for tightly controlled minigame environments while 
 
 - Keep changes safe for the fork's 1.8.9-focused deployment model.
 - Prefer legacy-safe assumptions when packet behavior differs by version.
-- Do not add new runtime requirements that conflict with Java 8 migration goals.
+- Keep legacy profile behavior and module selection stable when introducing build changes.
 
 ### Hardening policy
 
@@ -69,7 +69,7 @@ Legacy migration progress check:
 ./gradlew :common:compileJava -PlegacyJava8=true
 ```
 
-If Java 8 profile fails, include the failure class/category in your PR notes and explain what was or was not migrated.
+If legacy compatibility profile fails, include the failure class/category in your PR notes and describe the regression clearly.
 
 ## Developer Notes
 
